@@ -1,7 +1,14 @@
 /* Nivas settings. Change values here only. Used by index.html, privacy.html, terms.html and delete-account.html */
 window.NIVAS = {
   // 1. Paste your Firebase web config here (Firebase console, Project settings, Your apps, Web app)
-  firebase: { apiKey: '', authDomain: '', projectId: '', appId: '' },
+  firebase: {
+  apiKey: "AIzaSyC2xObuHDrtT0kbS2lBnM3dOi3JFViopvA",
+  authDomain: "nivas-905b9.firebaseapp.com",
+  projectId: "nivas-905b9",
+  storageBucket: "nivas-905b9.firebasestorage.app",
+  messagingSenderId: "129877099020",
+  appId: "1:129877099020:web:358deec64a97cf888d2429"
+  },
   // 2. Your hosted address with a trailing slash, for example https://yourname.github.io/nivas/  (used in receipt links)
   site: '',
   // 3. Support contact shown in the app
