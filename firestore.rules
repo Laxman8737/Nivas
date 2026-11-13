@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner(uid) {
+      return request.auth != null && request.auth.uid == uid && request.auth.token.email_verified == true;
+    }
+    function shape(d) {
+      return d.keys().hasOnly(['data', 'rev', 'schema', 'updatedAt'])
+        && d.data is string && d.data.size() < 900000
+        && d.rev is int && d.schema == 1 && d.updatedAt == request.time;
+    }
+    // One document per hostel owner. The id must equal the signed-in user's uid.
+    match /owners/{uid} {
+      allow read: if owner(uid);
+      allow create: if owner(uid) && shape(request.resource.data) && request.resource.data.rev == 1;
+      allow update: if owner(uid) && shape(request.resource.data)
+        && request.resource.data.rev == resource.data.rev + 1;
+      allow delete: if owner(uid);
+    }
+    // Everything else is denied.
+    match /{document=**} { allow read, write: if false; }
+  }
+}
